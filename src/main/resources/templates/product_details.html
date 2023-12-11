@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
+    <title>Details</title>
+
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
+
+    <link href="/askbootstrap/preview/vegishop/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+</head>
+<body class="fixed-bottom-padding">
+<div th:insert="~{fragment/header::headerFragment}"></div>
+<section class="py-4 osahan-main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="recommend-slider mb-3">
+                    <div class="osahan-slider-item">
+                        <img th:src="@{/get_product_image(imageName=(${product.getProductImg()}))}"
+                             class="img-fluid mx-auto shadow-sm rounded" alt="Responsive image">
+                    </div>
+                </div>
+                <div class="pd-f d-flex align-items-center mb-3">
+                    <form method="get" th:action="'/cart/' + ${product.getId()}">
+                        <button
+                                class="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg">
+                            <i
+                                    class="icofont-plus m-0 mr-2"></i> ADD TO CART
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="p-4 bg-white rounded shadow-sm">
+                    <div class="pt-0">
+                        <h2 class="font-weight-bold" th:text="${product.name}"></h2>
+                        <p class="font-weight-light text-dark m-0 d-flex align-items-center">
+                            Product PRICE : <b class="h6 text-dark m-0" th:text="${product.price}"></b>
+                        </p>
+                        <a href="../static/askbootstrap/preview/vegishop/review.html">
+                            <div class="rating-wrap d-flex align-items-center mt-2">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="pt-2">
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="pt-3 bg-white">
+                        </div>
+                    </div>
+                    <p class="font-weight-bold mb-2">Product DESCRIPTION</p>
+                    <p class="text-muted small mb-0" th:text="${product.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <h5 class="mt-3 mb-3" style=margin-left:50px>Maybe You Like this.</h5>
+    <div class="row">
+        <div class="col-sm-3 col-md-3 mb-3" th:each="productByType : ${productList}" style=margin-left:50px>
+            <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+                <div class="list-card-image">
+                    <a th:href="@{/product/single_page/{id}(id=${productByType.id})}" class="text-dark">
+                        <div class="p-3">
+                            <img th:src="@{/get_product_image(imageName=(${productByType.getProductImg()}))}"
+                                 class="img-fluid item-img w-100 mb-3">
+                            <h6 th:text="${productByType.name}"></h6>
+                            <div class="d-flex align-items-center">
+                                <h6 class="price m-0 text-success" th:text="${productByType.price} + ' PRICE' "></h6>
+                                <div class="collapse qty_show" id="collapseExample1">
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <form method="get" th:action="'/cart/' + ${product.getId()}">
+                    <button
+                            class="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg">
+                        <i
+                                class="icofont-plus m-0 mr-2"></i> ADD TO CART
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    </div>
+</section>
+</div>
+<div th:insert="~{fragment/footer::footerFragment}"></div>
+
+<script src="../static/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
+        type="a04c2d3951dbcbded3a74ecc-text/javascript"></script>
+<script src="../static/askbootstrap/preview/vegishop/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        type="a04c2d3951dbcbded3a74ecc-text/javascript"></script>
+
+<script type="a04c2d3951dbcbded3a74ecc-text/javascript"
+        src="../static/askbootstrap/preview/vegishop/vendor/slick/slick.min.js"></script>
+
+<script type="a04c2d3951dbcbded3a74ecc-text/javascript"
+        src="../static/askbootstrap/preview/vegishop/vendor/sidebar/hc-offcanvas-nav.js"></script>
+
+<script src="../static/askbootstrap/preview/vegishop/js/osahan.js"
+        type="a04c2d3951dbcbded3a74ecc-text/javascript"></script>
+<script src="../static/askbootstrap/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+        data-cf-settings="a04c2d3951dbcbded3a74ecc-|49" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+        data-cf-beacon='{"rayId":"7d447c3bdd292920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

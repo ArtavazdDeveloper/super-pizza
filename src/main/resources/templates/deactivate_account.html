@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
+    <title>Deactivate account</title>
+
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
+
+    <link href="/askbootstrap/preview/vegishop/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+</head>
+<body class="fixed-bottom-padding">
+
+<div class="border-bottom p-3 d-none mobile-nav">
+    <div class="title d-flex align-items-center">
+        <a href="home.html" class="text-decoration-none text-dark d-flex align-items-center">
+            <img class="osahan-logo mr-2" src="https://askbootstrap.com/preview/vegishop/img/logo.svg">
+            <h4 class="font-weight-bold text-success m-0">Grocery</h4>
+        </a>
+        <p class="ml-auto m-0">
+            <a href="/askbootstrap/preview/vegishop/listing.html"
+               class="text-decoration-none bg-white p-1 rounded shadow-sm d-flex align-items-center">
+                <i class="text-dark icofont-sale-discount"></i>
+                <span class="badge badge-danger p-1 ml-1 small">50%</span>
+            </a>
+        </p>
+        <a class="toggle ml-3" href="deactivate_account.html#"><i class="icofont-navigation-menu"></i></a>
+    </div>
+    <a href="/askbootstrap/preview/vegishop/search.html" class="text-decoration-none">
+        <div class="input-group mt-3 rounded shadow-sm overflow-hidden bg-white">
+            <div class="input-group-prepend">
+                <button class="border-0 btn btn-outline-secondary text-success bg-white"><i class="icofont-search"></i>
+                </button>
+            </div>
+            <input type="text" class="shadow-none border-0 form-control pl-0" placeholder="Search for Products.."
+                   aria-label aria-describedby="basic-addon1">
+        </div>
+    </a>
+</div>
+<div class="theme-switch-wrapper">
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox"/>
+        <div class="slider round"></div>
+        <i class="icofont-moon"></i>
+    </label>
+    <em>Enable Dark Mode!</em>
+</div>
+
+<div th:insert="~{fragment/header::headerFragment}"></div>
+
+<nav aria-label="breadcrumb" class="breadcrumb mb-0">
+    <div class="container">
+        <ol class="d-flex align-items-center mb-0 p-0">
+            <li class="breadcrumb-item"><a href="deactivate_account.html#" class="text-success">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Deactivate account</li>
+        </ol>
+    </div>
+</nav>
+
+<section class="py-4 osahan-main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="osahan-account bg-white rounded shadow-sm overflow-hidden">
+                    <div class="p-4 profile text-center border-bottom">
+                        <img th:src="@{/get_user_image(imageName=${currentUser.getAvatar()})}"
+                             class="img-fluid rounded-pill">
+                        <h6 class="font-weight-bold m-0 mt-2"
+                            th:text="${currentUser.getName() + ' ' + currentUser.getSurname()}"></h6>
+                        <p class="small text-muted m-0">
+                        <h6 th:text="${currentUser.getContactData().getEmail()}"></h6>
+                        </p>
+                    </div>
+                    <div class="account-sections">
+                        <ul class="list-group">
+                            <a href="/user/account" class="text-decoration-none text-dark">
+                                <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                    <i class="icofont-user osahan-icofont bg-danger"></i>My Account
+                                    <span class="badge badge-success p-1 badge-pill ml-auto"><i
+                                            class="icofont-simple-right"></i></span>
+                                </li>
+                            </a>
+                            <a href="/address/user/address"
+                               class="text-decoration-none text-dark">
+                                <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                    <i class="icofont-address-book osahan-icofont bg-dark"></i>My Address
+                                    <span class="badge badge-success p-1 badge-pill ml-auto"><i
+                                            class="icofont-simple-right"></i></span>
+                                </li>
+                            </a>
+                            <a href="/logout" class="text-decoration-none text-dark">
+                                <li class="border-bottom bg-white d-flex  align-items-center p-3">
+                                    <i class="icofont-lock osahan-icofont bg-danger"></i> Logout
+                                </li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 p-4 bg-white rounded shadow-sm">
+                <h4 class="mb-4 profile-title">Deactivate account</h4>
+                <p th:if="${msg}" th:text="${msg}" style="color: red"></p>
+                <div id="deactivate_account">
+                    <div class="p-3 bg-light rounded">
+                        <form method="post" action="/user/deactivate_account">
+                            <div class="form-group">
+                                <div class="email">
+                                    <span class="small font-weight-bold">Email</span>
+                                    <p th:text="${currentUser.getContactData().getEmail()}"></p>
+                                </div>
+                                <div class="number">
+                                    <span class="small font-weight-bold">Number</span>
+                                    <p class="number" th:text="${currentUser.getContactData().getPhoneNumber()}"></p>
+                                </div>
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" placeholder="Enter Password" class="form-control"
+                                       id="exampleInputPassword1" name="password">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success btn-block btn-lg"
+                                >CONFIRM DEACTIVATE
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="mt-3">
+                        <div class="terms small">
+                            <span class="font-weight-bold">When you deactivate the account</span>
+                            <ul class="list-unstyled text-muted">
+                                <li>We will miss you.</li>
+                                <li>You won't be able to access your Wish list.</li>
+                                <li>You will not get updates about the latest offers & discounts.</li>
+                                <li>You will have to fill your details while checking out over and over again.</li>
+                                <li>You won't be able to check your past orders.</li>
+                            </ul>
+                            <span class="font-weight-bold pt-2">How do I reactivate my Grocery account?</span>
+                            <ul class="list-unstyled text-muted">
+                                <li>Coming back is easy.</li>
+                                <li>Simply contact us to re-activate your account. Your account data will be fully
+                                    restored - default settings will be applied and you will be subscribed to receive
+                                    promotional emails from Grocery.
+                                </li>
+                                <li>Grocery retains your account data for you to conveniently start off from where you
+                                    left, if you decide to reactivate your account.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="section-footer border-top bg-white">
+    <section class="footer-top py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-inline">
+                        <select class="custom-select mr-2">
+                            <option>USD</option>
+                            <option>EUR</option>
+                            <option>RUBL</option>
+                        </select>
+                        <select class="custom-select">
+                            <option>United States</option>
+                            <option>Russia</option>
+                            <option>Uzbekistan</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" placeholder="Email" class="form-control" name>
+                            <span class="input-group-append">
+<button type="submit" class="btn btn-success"> Subscribe</button>
+</span>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-md-4 text-md-right">
+                    <a href="deactivate_account.html#" class="btn btn-icon btn-light"><i
+                            class="icofont-facebook"></i></a>
+                    <a href="deactivate_account.html#" class="btn btn-icon btn-light"><i
+                            class="icofont-twitter"></i></a>
+                    <a href="deactivate_account.html#" class="btn btn-icon btn-light"><i class="icofont-instagram"></i></a>
+                    <a href="deactivate_account.html#" class="btn btn-icon btn-light"><i
+                            class="icofont-youtube"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="footer-main border-top pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md">
+                    <h6 class="title">Products</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a href="/askbootstrap/preview/vegishop/listing.html" class="text-dark">Listing</a>
+                        </li>
+                        <li><a href="/templates/product_details.html" class="text-dark">Detail</a>
+                        </li>
+                        <li><a href="/askbootstrap/preview/vegishop/picks_today.html" class="text-dark">Trending</a>
+                        </li>
+                        <li><a href="/askbootstrap/preview/vegishop/recommend.html" class="text-dark">Recommended</a>
+                        </li>
+                        <li><a href="/askbootstrap/preview/vegishop/fresh_vegan.html" class="text-dark">Most
+                            Popular</a></li>
+                    </ul>
+                </aside>
+                <aside class="col-md">
+                    <h6 class="title">Checkout Process</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a href="/templates/cart.html" class="text-dark">Cart</a></li>
+                        <li><a href="/templates/cart.html" class="text-dark">Order
+                            Address</a></li>
+                        <li><a href="/templates/cart.html" class="text-dark">Delivery
+                            Time</a></li>
+                        <li><a href="/templates/cart.html" class="text-dark">Order
+                            Payment</a></li>
+                        <li><a href="/templates/checkout.html"
+                               class="text-dark">Checkout</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/successful.html" class="text-dark">Successful</a>
+                        </li>
+                    </ul>
+                </aside>
+                <aside class="col-md">
+                    <h6 class="title">My Order</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a href="/askbootstrap/preview/vegishop/my_order.html" class="text-dark">My
+                            order</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/status_complete.html" class="text-dark">Status
+                            Complete</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/status_onprocess.html" class="text-dark">Status
+                            on Process</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/status_canceled.html" class="text-dark">Status
+                            Canceled</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/review.html" class="text-dark">Review</a>
+                        </li>
+                    </ul>
+                </aside>
+                <aside class="col-md">
+                    <h6 class="title">My Account</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a class="text-dark" href="userAccount.html"> My account</a></li>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/promos.html"> Promos</a>
+                        </li>
+                        <li><a class="text-dark" href="/templates/my_address.html"> My
+                            address</a></li>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/terms_conditions.html">
+                            Terms &amp; conditions</a></li>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/help_support.html"> Help
+                            &amp; support</a></li>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/help_ticket.html"> Help
+                            ticket</a></li>
+                        <li><a class="text-dark" href="../../../../templates/signin.html"> Logout</a></li>
+                    </ul>
+                </aside>
+                <aside class="col-md">
+                    <h6 class="title">Extra Pages</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a href="/askbootstrap/preview/vegishop/promo_details.html" class="text-dark">
+                            Promo Details </a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/terms_conditions.html" class="text-dark">
+                            Conditions </a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/help_support.html" class="text-dark"> Help
+                            Support </a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/refund_payment.html" class="text-dark">
+                            Refund Payment </a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/faq.html" class="text-dark"> FAQ </a></li>
+                        <li><a href="../../../../templates/signin.html" class="text-dark"> Sign In </a></li>
+                    </ul>
+                </aside>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="footer-bottom border-top py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="pr-2">© 2021 Vegishop</span>
+                    <span class="pr-2"><a href="/askbootstrap/preview/vegishop/privacy.html"
+                                          class="text-dark">Privacy</a></span>
+                    <span class="pr-2"><a href="terms&amp;conditions.html"
+                                          class="text-dark">Terms & Conditions</a></span>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <a "https://askbootstrap.com/preview/vegishop/href"><img
+                        src="/askbootstrap/preview/vegishop/img/appstore.png" height="30"></a>
+                    <a "https://askbootstrap.com/preview/vegishop/href"><img
+                        src="/askbootstrap/preview/vegishop/img/playmarket.png" height="30"></a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</footer>
+
+<script data-cfasync="false"
+        src="/askbootstrap/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
+        type="eda4a4eafe0d15869f88d197-text/javascript"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        type="eda4a4eafe0d15869f88d197-text/javascript"></script>
+
+<script type="eda4a4eafe0d15869f88d197-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/slick/slick.min.js"></script>
+
+<script type="eda4a4eafe0d15869f88d197-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/sidebar/hc-offcanvas-nav.js"></script>
+
+<script src="/askbootstrap/preview/vegishop/js/osahan.js"
+        type="eda4a4eafe0d15869f88d197-text/javascript"></script>
+<script src="/askbootstrap/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+        data-cf-settings="eda4a4eafe0d15869f88d197-|49" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+        data-cf-beacon='{"rayId":"7d447dae99ae2920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

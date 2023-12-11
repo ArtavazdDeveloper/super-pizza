@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
+    <title>SUPER PIZZA</title>
+
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
+
+    <link href="/askbootstrap/preview/vegishop/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body class="fixed-bottom-padding">
+<div th:insert="~{fragment/header::headerFragment}"></div>
+<section style="display: flex; flex-direction: column; padding: 10px">
+    <h4 class="mb-4 profile-title" style=color:orange>ADD PRODUCT</h4>
+
+    <div class="pb-3" style=background-color:orange>
+        <form action="/manager" method="post" enctype="multipart/form-data">
+            <div style="display: flex; justify-content: center">
+                <label>
+                    Product name<br>
+                    <input type="text" name="name" style="margin-top: 10px">
+                </label>
+                <label style="margin-left: 20px">
+                    Description<br>
+                    <input type="text" name="description" style="margin-top: 10px">
+                </label>
+                <label style="margin-left: 20px">
+                    PRODUCT TYPE <br>
+                    <select name="productType" th:value="productType" style="margin-top: 10px">
+                        <option th:each="productType : ${productTypes}" th:text="${productType.name()}"
+                        ></option>
+                    </select>
+                </label>
+                <label style="margin-left: 20px">
+                    PRICE<br>
+                    <input type="text" name="price" style="margin-top: 10px">
+                </label>
+                <label style="margin-left: 20px">
+                    VOLUME<br>
+                    <input type="number" name="volume" style="margin-top: 10px">
+                </label>
+                <label style="margin-left: 20px">
+                    PRODUCT IMAGE<br>
+                    <input type="file" name="image" style="margin-top: 10px">
+                </label>
+                <label>
+                    <br>
+                    <input type="submit" value="ADD" style="margin-top: 10px">
+                </label>
+            </div>
+        </form>
+    </div>
+    <div class="osahan-body">
+
+        <div class="pt-3 pb-2 rounded osahan-categories">
+            <div class="d-flex align-items-center mb-2">
+                <h5 class="m-0 text-white">CATALOG</h5>
+            </div>
+            <div class="categories-slider">
+                <div class="col-c" th:each="productType : ${productTypes}">
+                    <div class="bg-white shadow-sm rounded text-center my-2 px-2 py-3 c-it">
+                        <a th:href="@{/manager/take_product_by_type/type={type}(type=${productType})}">
+                            <img src="/askbootstrap/preview/vegishop/img/categorie/8.svg"
+                                 class="img-fluid px-2 mx-auto">
+                            <p class="m-0 pt-2 text-muted text-center" th:text="${productType}"></p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pick_today" style="border:20px">
+        <div class="row" style=" padding: 30px">
+            <div class="col-6 col-md-3 mb-3" th:each="product : ${products}" style="height:250px;">
+                <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+                    <div class="list-card-image">
+                        <a th:href="@{/manager/delete_product(id=${product.getId()})}"
+                           class="text-dark"><h4>DELETE</h4></a>
+                        <div class="p-3">
+                            <img th:src="@{/get_product_image(imageName=(${product.getProductImg()}))}"
+                                 class="img-fluid item-img w-100 mb-3" style=height:140px width=90px>
+                            <h6 th:text="${product.name}"></h6>
+                            <div class="d-flex align-items-center">
+                                <h6 class="price m-0 text-success"
+                                    th:text="${product.price}"></h6>
+                                <div class="collapse qty_show" id="collapseExample1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 25px;">
+        <div th:if="${products.totalPages > 0}"
+             th:each="pageNumber : ${pageNumbers}">
+
+            <a style="display: flex; margin-left: 10px"
+               th:href="@{'/manager/take_product_by_type/type='+${productType}(size=${products.size}, page=${pageNumber})}"
+               th:text="${pageNumber}"
+               th:class="${pageNumber==products.number + 1} ? active"></a>
+        </div>
+    </div>
+</section>
+<div th:insert="~{fragment/footer::footerFragment}"></div>
+
+
+<script data-cfasync="false"
+        src="/askbootstrap/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
+        type="90efb1363f5825093026abc9-text/javascript"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        type="90efb1363f5825093026abc9-text/javascript"></script>
+
+<script type="90efb1363f5825093026abc9-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/slick/slick.min.js"></script>
+
+<script type="90efb1363f5825093026abc9-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/sidebar/hc-offcanvas-nav.js"></script>
+
+<script src="/askbootstrap/preview/vegishop/js/osahan.js" type="90efb1363f5825093026abc9-text/javascript"></script>
+<script src="/askbootstrap/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+        data-cf-settings="90efb1363f5825093026abc9-|49" defer></script>
+<script defer
+        src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+        data-cf-beacon='{"rayId":"7d447c4b5ea62920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

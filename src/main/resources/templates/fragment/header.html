@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div th:fragment="headerFragment">
+    <div class="bg-white shadow-sm osahan-main-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white osahan-header py-0 container">
+            <a class="navbar-brand mr-0" href="/"> <img class="img-fluid logo-img "
+                                                       src="/askbootstrap/preview/vegishop/img/logo.png"></a>
+
+            <div class="ml-3 d-flex align-items-center">
+                <div class="input-group mr-sm-2 col-lg-12">
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername3"
+                           placeholder="Search for Products...">
+                    <div class="input-group-prepend">
+                        <div class="btn btn-success rounded-right"><i class="icofont-search"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ml-auto d-flex align-items-center">
+
+                <a th:if="${currentUser == null}" href="/" data-toggle="modal" data-target="#login"
+                   class="mr-2 text-dark bg-light rounded-pill p-2 icofont-size border shadow-sm">
+                    <i class="icofont-login"></i>
+
+                </a>
+
+                <a href="/cart/cartProductList" th:if="${currentUser != null}"
+                   class="ml-2 text-dark bg-light rounded-pill p-2 icofont-size border shadow-sm">
+                    <i class="icofont-shopping-cart"></i>
+                </a>
+
+                <div th:if="${currentUser != null}" class="dropdown mr-3" style="margin-left: 20px">
+                        <img th:src="@{/get_user_image(imageName=${currentUser.getAvatar()})}" class="img-fluid rounded-circle header-user mr-2">
+                        <span th:text="' Hi ' + ${currentUser.getName()}"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right top-profile-drop" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/user/account">My account</a>
+                        <a class="dropdown-item" href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="bg-color-head">
+            <div class="container menu-bar d-flex align-items-center">
+                <ul class="list-unstyled form-inline mb-0">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white pl-0" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                    </li>
+                </ul>
+                <div class="list-unstyled form-inline mb-0 ml-auto">
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('COURIER')}" href="/courier/my_deliveries" class="text-white px-3 py-2">My Deliveries</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('ADMIN')}" href="/admin" class="text-white px-3 py-2">ADMIN PAGE</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager" class="text-white bg-offer px-3 py-2"><i
+                            class="icofont-sale-discount h6"></i>MANAGER PAGE</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('COURIER')}" href="/courier/delivery" class="text-white bg-offer px-3 py-2"><i
+                            class="icofont-sale-discount h6"></i>DELIVERY PAGE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
