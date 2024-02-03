@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div th:fragment="footerFragment">
+    <footer class="section-footer border-top bg-white">
+</section>
+
+<section class="footer-main border-top pt-5 pb-4">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md">
+                <h6 class="title">DRINKS</h6>
+                <ul class="list-unstyled list-padding">
+                    <li><a href="/product/get_product_by_type/type=DRINK" class="text-dark">WINE</a></li>
+                    <li><a href="/product/get_product_by_type/type=BEER" class="text-dark">BEER</a>
+                    </li>
+                    <li><a href="/product/get_product_by_type/type=DRINK" class="text-dark">DRINKS</a>
+                    </li>
+                </ul>
+            </aside>
+            <aside class="col-md">
+                <h6 class="title">Products</h6>
+                <ul class="list-unstyled list-padding">
+                    <li><a href="/product/get_product_by_type/type=PIZZA" class="text-dark">PIZZA</a></li>
+                    <li><a href="/product/get_product_by_type/type=SALAD">SALAD</a>
+                    </li>
+                    <li><a href="/product/get_product_by_type/type=DESSERT" class="text-dark">DESSERT</a>
+                    </li>
+                </ul>
+            </aside>
+            <aside class="col-md">
+                <h6 class="title">SEAFOOD</h6>
+                <ul class="list-unstyled list-padding">
+                    <li><a href="/product/get_product_by_type/type=SEAFOOD" class="text-dark">SEAFOOD</a></li>
+                </ul>
+            </aside>
+            <aside class="col-md" th:if="${currentUser != null}">
+                <h6 class="title">My Account</h6>
+                <ul class="list-unstyled list-padding">
+                    <li><a class="text-dark" href="/user/account"> My account</a>
+                    </li>
+                    <li><a class="text-dark" href="/address/user/address"> My address</a>
+                    </li>
+                    <li><a class="text-dark" href="/logout"> Logout</a></li>
+                </ul>
+            </aside>
+            <aside class="col-md" th:if="${currentUser == null}">
+                <h6 class="title">Extra Pages</h6>
+                <ul class="list-unstyled list-padding">
+                    <li><a href="/user/register" class="text-dark">
+                        REGISTER </a></li>
+                </ul>
+            </aside>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="footer-bottom border-top py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="pr-2">SMART PIZZA</span>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href="https://www.facebook.com/tashirpizza/?locale=hy_AM" class="btn btn-icon btn-light"><i
+                        class="icofont-facebook"></i></a>
+                <a href="https://www.instagram.com/tashirpizzaarmenia/" class="btn btn-icon btn-light"><i
+                        class="icofont-instagram"></i></a>
+                <a href="https://www.youtube.com/watch?v=h8nz_X9EHoA" class="btn btn-icon btn-light"><i
+                        class="icofont-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<div class="modal fade right-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header p-0">
+                <nav class="schedule w-100">
+                    <div th:if="${currentUser == null}" class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-link active col-5 py-4" id="nav-home-tab" data-toggle="tab"
+                           href="home.html#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                            <p class="mb-0 font-weight-bold">Sign in</p>
+                        </a>
+                        <a class="nav-link col-5 py-4"
+                           href="/user/register"
+                           aria-selected="false">
+                            <p class="mb-0 font-weight-bold">Register</p>
+                        </a>
+                        <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"
+                           data-dismiss="modal" aria-label="Close">
+                            <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>
+                        </a>
+                    </div>
+                    <div th:unless="${currentUser == null}" class="nav nav-tabs">
+                        <a class="nav-link col-5 py-4"
+                           href="/logout"
+                           aria-selected="false">
+                            <p class="mb-0 font-weight-bold">Logout</p>
+                        </a>
+                        <a class="nav-link col-5 py-4"
+                           href="/"
+                           aria-selected="false">
+                            <p class="mb-0 font-weight-bold">Cancel</p>
+                        </a>
+                        <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"
+                           data-dismiss="modal" aria-label="Close">
+                            <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+            <div th:if="${currentUser == null}" class="modal-body p-0">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                         aria-labelledby="nav-home-tab">
+                        <div class="osahan-signin p-4 rounded">
+                            <div class="p-2">
+                                <h2 class="my-0">Smart Pizza</h2>
+                                <form method="post" action="/login">
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email</label>
+                                        <input placeholder="Enter Email" type="email" class="form-control"
+                                               name="username"
+                                               id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Password</label>
+                                        <input placeholder="Enter Password" type="password" class="form-control"
+                                               name="password"
+                                               id="exampleInputPassword1">
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-lg rounded btn-block">Sign in
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</footer>
+
+</div>
+</body>
+</html>

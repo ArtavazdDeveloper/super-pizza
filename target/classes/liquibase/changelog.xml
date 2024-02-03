@@ -1,0 +1,282 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <property name="now" value="now()" dbms="mysql"/>
+
+    <changeSet id="createTableAddresses" author="superPizza">
+        <createTable tableName="addresses">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="country" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apartment_number" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="int(11)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTableContactData" author="superPizza">
+        <createTable tableName="contact_data">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="email" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTableUsers" author="superPizza">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dob" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registration_date" type="datetime" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_data_id" type="int(11)">
+                <constraints nullable="false" foreignKeyName="fk_users_contact_data" references="contact_data(id)"/>
+            </column>
+            <column name="user_role" type="ENUM('ADMIN', 'USER', 'COURIER', 'MANAGER')" defaultValue="USER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="profile_img" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="addConstrainAddressUser" author="ArtavazdDeveloper">
+        <addForeignKeyConstraint baseTableName="addresses" baseColumnNames="user_id"
+                                 constraintName="fk_addresses_user"
+                                 referencedTableName="users" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="changeColumnNameInUserTable1" author="superPizza">
+        <renameColumn columnDataType="varchar(255)"
+                      newColumnName="password"
+                      oldColumnName="password"
+
+                      tableName="users"/>
+    </changeSet>
+
+    <changeSet id="dropColumnCountryInAddressesTable" author="ArtavazdDeveloper">
+        <dropColumn tableName="addresses" columnName="country"/>
+    </changeSet>
+
+    <changeSet id="addConstraintOnDelete1" author="ArtavazdDeveloper">
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="contact_data_id"
+                                 constraintName="users_contact_data_fk"
+                                 referencedTableName="contact_data"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="addColumnEnabledInTableUsers" author="ArtavazdDeveloper">
+        <addColumn tableName="users">
+            <column name="enabled" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="varchar(255)" defaultValue="null">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="addTableForPhoneOperatorCode" author="ArtavazdDeveloper">
+        <createTable tableName="phone_operator_code">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="operator_code" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="addPhoneOperatorCode" author="ArtavazdDeveloper">
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="41"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="43"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="49"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="55"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="77"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="91"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="93"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="94"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="95"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="96"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="98"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="99"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="createTableProducts" author="ArtavazdDeveloper">
+        <createTable tableName="products">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="volume" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_image" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_type" type="ENUM('DESSERT','FAST_FOOD','DRINK','BEER','WINE','PIZZA',
+            'SALAD','BREAD','SEAFOOD')">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Raf" id="drop_column_quantity">
+        <dropColumn tableName="products" columnName="quantity"/>
+    </changeSet>
+
+    <changeSet id="createTableCart" author="ArtavazdDeveloper">
+        <createTable tableName="carts">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="addTableCartProducts" author="ArtavazdDeveloper">
+        <createTable tableName="cart_products">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="cart_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="int(11)" defaultValue="null">
+                <constraints nullable="true"/>
+            </column>
+            <column name="count_product" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_status" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_address_id" type="int(11)" defaultValue="null">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createOrderTable" author="ArtavazdDeveloper">
+        <createTable tableName="orders">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_address" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_time" type="datetime" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_payment_done" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_status" type="ENUM('DELIVERED', 'UNDELIVERED', 'IN_PROCESS')"
+                    defaultValue="UNDELIVERED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_total_cost" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTableCourierDeliveries" author="ArtavazdDeveloper">
+        <createTable tableName="courier_deliveries">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="order_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="courier_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_status" type="ENUM('DELIVERED', 'UNDELIVERED', 'IN_PROCESS')"
+                    defaultValue="IN_PROCESS">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

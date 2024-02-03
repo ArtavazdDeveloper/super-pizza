@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
+    <title>SUPER PIZZA</title>
+
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
+
+    <link href="askbootstrap/preview/vegishop/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+</head>
+<body class="fixed-bottom-padding">
+
+<div th:insert="~{fragment/header::headerFragment}"></div>
+
+<section class="py-4 osahan-main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="nav nav-tabs custom-tabs border-0 flex-column bg-white rounded overflow-hidden shadow-sm p-2 c-t-order"
+                    id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <i class="icofont-check-alt mr-2 text-success mb-0">SEARCH USER BY EMAIL</i>
+                        <form action="/admin/user_by_email" method="post">
+                            <input type="text" name="email">
+                            <input type="submit" value="search">
+                        </form>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <i class="icofont-check-alt mr-2 text-success mb-0">UPDATE USER ROLE</i>
+                        <form action="/admin/change_user_role" method="post">
+                            <select name="userRole" th:value="${userRole}">
+                                <option th:each="userRole : ${userRoles}" th:value="${userRole.name()}" th:text="${userRole}"></option>
+                            </select>
+                            <input type="hidden" name="id" th:if="${user != null}" th:value="${user.id}">
+                            <input type="submit" th:value="change">
+                        </form>
+                    </li>
+                    <li>
+                        <a th:if="${user != null}" th:href="@{/admin/delete_user/{id}(id=${user.id})}" style= border:20px>
+                            <i class="icofont-check-alt mr-2 text-success mb-0"> REMOVE USER</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content col-md-9" id="myTabContent" th:if="${user != null}">
+                <div class="tab-pane fade show active" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+                    <div class="order-body">
+                        <div class="pb-3">
+                            <div class="p-3 rounded shadow-sm bg-white">
+                                <h4 th:text="${user.name}" style=color:orange></h4>
+                                <div class="d-flex align-items-center mb-3">
+                                    <img th:src="@{/get_product_image(imageName=(${user.getAvatar()}))}"
+                                         style=width:100px>
+                                    <div style=margin-left:10px>
+                                        <h5 style=color:orange> SURNAME</h5>
+                                        <h5 th:text="${user.surname}"></h5>
+                                    </div>
+                                    <div style=margin-left:20px>
+                                        <h5 style=color:orange>Role</h5>
+                                        <h5 th:text="${user.userRole}"></h5>
+                                    </div>
+                                    <div style=margin-left:20px>
+                                        <h5 style=color:orange>DATE OF BIRTHDAY</h5>
+                                        <h5 th:text="${user.dateOfBirth}"></h5>
+                                    </div>
+                                    <div style=margin-left:20px>
+                                        <h5 style=color:orange>PHONE NUMBER</h5>
+                                        <h5 th:text="${user.contactData.getPhoneNumber()}"></h5>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+<nav id="main-nav">
+    <ul class="second-nav">
+        <li><a href="../home.html"><i class="icofont-smart-phone mr-2"></i> Home</a></li>
+        <li>
+            <a href="userSettingPage.html#"><i class="icofont-login mr-2"></i> Authentication</a>
+            <ul>
+                <li><a class="dropdown-item" href="../../../../templates/signin.html">Sign In</a></li>
+                <li><a class="dropdown-item" href="../signup.html">Sign Up</a></li>
+                <li><a href="../../static/askbootstrap/preview/vegishop/verification.html">Verification</a></li>
+            </ul>
+        </li>
+        <li><a class="dropdown-item" href="listing.html">Listing</a></li>
+        <li><a class="dropdown-item" href="product_details.html">Detail</a></li>
+        <li><a class="dropdown-item" href="picks_today.html">Trending</a></li>
+        <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/recommend.html">Recommended</a>
+        </li>
+        <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/fresh_vegan.html">Most Popular</a>
+        </li>
+        <li><a class="dropdown-item" href="cart.html">Cart</a></li>
+        <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
+        <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/successful.html">Successful</a>
+        </li>
+        <li>
+            <a href="userSettingPage.html#"><i class="icofont-sub-listing mr-2"></i> My Order</a>
+            <ul>
+                <li><a class="dropdown-item" href="userSettingPage.html">My order</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/status_complete.html">Status
+                    Complete</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/status_onprocess.html">Status
+                    on Process</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/status_canceled.html">Status
+                    Canceled</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/review.html">Review</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="userSettingPage.html#"><i class="icofont-ui-user mr-2"></i> My Account</a>
+            <ul>
+                <li><a class="dropdown-item" href="my_account.html">My account</a></li>
+                <li><a class="dropdown-item" href="promos.html">Promos</a></li>
+                <li><a class="dropdown-item" href="my_address.html">My address</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/terms_conditions.html">Terms
+                    & conditions</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/help_support.html">Help &
+                    support</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/help_ticket.html">Help
+                    ticket</a></li>
+                <li><a class="dropdown-item" href="../../../../templates/signin.html">Logout</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="userSettingPage.html#"><i class="icofont-page mr-2"></i> Pages</a>
+            <ul>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/verification.html">Verification</a>
+                </li>
+                <li><a class="dropdown-item" href="promos.html">Promos</a></li>
+                <li><a class="dropdown-item" href="promo_details.html">Promo Details</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/terms_conditions.html">Terms
+                    & Conditions</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/privacy.html">Privacy</a>
+                </li>
+                <li><a class="dropdown-item" href="terms&amp;conditions.html">Conditions</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/help_support.html">Help
+                    Support</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/help_ticket.html">Help
+                    Ticket</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/refund_payment.html">Refund
+                    Payment</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/faq.html">FAQ</a></li>
+                <li><a class="dropdown-item" href="../../../../templates/signin.html">Sign In</a></li>
+                <li><a class="dropdown-item" href="../signup.html">Sign Up</a></li>
+                <li><a class="dropdown-item" href="../../static/askbootstrap/preview/vegishop/search.html">Search</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="userSettingPage.html#"><i class="icofont-link mr-2"></i> Navigation Link Example</a>
+            <ul>
+                <li>
+                    <a href="userSettingPage.html#">Link Example 1</a>
+                    <ul>
+                        <li>
+                            <a href="userSettingPage.html#">Link Example 1.1</a>
+                            <ul>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="userSettingPage.html#">Link Example 1.2</a>
+                            <ul>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                                <li><a href="userSettingPage.html#">Link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="userSettingPage.html#">Link Example 2</a></li>
+                <li><a href="userSettingPage.html#">Link Example 3</a></li>
+                <li><a href="userSettingPage.html#">Link Example 4</a></li>
+                <li data-nav-custom-content>
+                    <div class="custom-message">
+                        You can add any custom content to your navigation items. This text is just an example.
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="bottom-nav">
+        <li class="email">
+            <a class="text-success" href="../home.html">
+                <p class="h5 m-0"><i class="icofont-home text-success"></i></p>
+                Home
+            </a>
+        </li>
+        <li class="github">
+            <a href="cart.html">
+                <p class="h5 m-0"><i class="icofont-cart"></i></p>
+                CART
+            </a>
+        </li>
+        <li class="ko-fi">
+            <a href="../../static/askbootstrap/preview/vegishop/help_ticket.html">
+                <p class="h5 m-0"><i class="icofont-headphone"></i></p>
+                Help
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div th:insert="~{fragment/footer::footerFragment}"></div>
+
+<script src="../../static/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
+        type="e560071d37381e7652aa4785-text/javascript"></script>
+<script src="../../static/askbootstrap/preview/vegishop/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        type="e560071d37381e7652aa4785-text/javascript"></script>
+
+<script type="e560071d37381e7652aa4785-text/javascript"
+        src="../../static/askbootstrap/preview/vegishop/vendor/slick/slick.min.js"></script>
+
+<script type="e560071d37381e7652aa4785-text/javascript"
+        src="../../static/askbootstrap/preview/vegishop/vendor/sidebar/hc-offcanvas-nav.js"></script>
+
+<script src="../../static/askbootstrap/preview/vegishop/js/osahan.js"
+        type="e560071d37381e7652aa4785-text/javascript"></script>
+<script src="../../static/askbootstrap/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+        data-cf-settings="e560071d37381e7652aa4785-|49" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+        data-cf-beacon='{"rayId":"7d447c455e102920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

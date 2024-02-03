@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
+    <title>Super Pizza</title>
+
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
+
+    <link href="/askbootstrap/preview/vegishop/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+</head>
+<body class="fixed-bottom-padding">
+
+<div class="theme-switch-wrapper">
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox"/>
+        <div class="slider round"></div>
+        <i class="icofont-moon"></i>
+    </label>
+    <em>Enable Dark Mode!</em>
+</div>
+
+<div th:insert="~{fragment/header::headerFragment}"></div>
+
+<!--Body context-->
+<section class="py-4 osahan-main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="osahan-home-page">
+
+                    <div class="osahan-body">
+
+                        <div class="pt-3 pb-2 rounded osahan-categories">
+                            <div class="categories-slider">
+                                <div class="col-c" th:each="productType : ${productTypes}">
+                                    <div class="bg-white shadow-sm rounded text-center my-2 px-2 py-3 c-it">
+                                        <a th:href="@{/product/get_product_by_type/type={type}(type=${productType})}">
+                                            <img src="/askbootstrap/preview/vegishop/img/categorie/8.svg"
+                                                 class="img-fluid px-2 mx-auto">
+                                            <h6 class="m-0 pt-2 text-muted text-center" th:text="${productType}"></h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-3 osahan-promos">
+                            <div class="d-flex align-items-center mb-3">
+                                <h5 class="m-0">FAST FOOD</h5>
+                            </div>
+                            <div class="promo-slider pb-0 mb-0">
+                                <div class="osahan-slider-item mx-2" th:each="fastFood : ${fastFoodList}">
+                                    <a th:href="@{product/single_page/{id}(id=${fastFood.id})}"><img
+                                            th:src="@{/get_product_image(imageName=(${fastFood.getProductImg()}))}"
+                                            class="img-fluid mx-auto rounded" alt="Responsive image"></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="title d-flex align-items-center py-3">
+                            <h5 class="m-0">RECOMMENDED FOR YOU</h5>
+
+                        </div>
+
+                        <div class="pick_today">
+                            <div class="row">
+                                <div class="col-6 col-md-3 mb-3" th:each="randomProduct, status : ${randomProducts}">
+                                    <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+                                        <div class="list-card-image">
+                                            <a th:href="@{product/single_page/{id}(id=${randomProduct.id})}"
+                                               class="text-dark">
+                                                <div class="p-3">
+                                                    <img th:src="@{/get_product_image(imageName=(${randomProduct.getProductImg()}))}"
+                                                         class="img-fluid item-img w-100 mb-3">
+                                                    <h6 th:text="${randomProduct.name}"></h6>
+                                                    <div class="d-flex align-items-center" style="display: flex; justify-content: space-between">
+                                                        <div>
+                                                            <h6 class="price m-0 text-success"
+                                                                th:text="${randomProduct.price}"></h6>
+                                                        </div>
+
+                                                       <div>
+                                                           <form method="get" th:action="'/cart/' + ${randomProduct.getId()}">
+
+                                                               <button th:if="${currentUser != null}"
+                                                                       th:name="cartProducs[__${status.index}__].id" th:value="${randomProduct.id}">
+                                                                   Add to cart
+                                                               </button>
+                                                           </form>
+                                                       </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:insert="~{fragment/footer::footerFragment}"></div>
+
+<script src="/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
+        type="04c4a063c19f0430837599fb-text/javascript"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        type="04c4a063c19f0430837599fb-text/javascript"></script>
+
+<script type="04c4a063c19f0430837599fb-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/slick/slick.min.js"></script>
+
+<script type="04c4a063c19f0430837599fb-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/sidebar/hc-offcanvas-nav.js"></script>
+
+<script src="/askbootstrap/preview/vegishop/js/osahan.js" type="04c4a063c19f0430837599fb-text/javascript"></script>
+<script src="/askbootstrap/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+        data-cf-settings="04c4a063c19f0430837599fb-|49" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+        data-cf-beacon='{"rayId":"7d447c24295d2920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

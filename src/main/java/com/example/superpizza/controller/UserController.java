@@ -1,27 +1,34 @@
 package com.example.superpizza.controller;
 
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.example.superpizza.entity.userEntity.Address;
 import com.example.superpizza.entity.userEntity.ContactData;
 import com.example.superpizza.entity.userEntity.User;
 import com.example.superpizza.security.CurrentUser;
 import com.example.superpizza.service.CodeOperatorService;
 import com.example.superpizza.service.UserService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
@@ -49,7 +56,7 @@ public class UserController {
                                           @ModelAttribute @Valid Address address, BindingResult addressBindingResult,
                                           ModelMap modelMap,
                                           @RequestParam("profileImg") MultipartFile multipartFile,
-                                          @RequestParam("operatorCode") String operatorCode,
+                                          @RequestParam String operatorCode,
                                           RedirectAttributes redirectAttributes) throws IOException {
 
         if (userBindingResult.hasErrors() || phoneBindingResult.hasErrors() || addressBindingResult.hasErrors()) {
@@ -68,8 +75,8 @@ public class UserController {
     }
 
     @GetMapping("/verify")
-    public String getVerifyUser(@RequestParam("email") String email,
-                                @RequestParam("token") UUID token) {
+    public String getVerifyUser(@RequestParam String email,
+                                @RequestParam UUID token) {
 
         Optional<User> user = userService.getUserByEmail(email);
         if (user.isEmpty() || user.get().isEnabled()) {
@@ -93,10 +100,10 @@ public class UserController {
     public String updateProfileData(RedirectAttributes redirectAttributes,
                                     @AuthenticationPrincipal CurrentUser currentUser,
                                     @PathVariable("id") int userId,
-                                    @RequestParam("name") String name,
-                                    @RequestParam("surname") String surname,
-                                    @RequestParam("operatorCode") String operatorCode,
-                                    @RequestParam("phoneNumber") String phoneNumber) {
+                                    @RequestParam String name,
+                                    @RequestParam String surname,
+                                    @RequestParam String operatorCode,
+                                    @RequestParam String phoneNumber) {
 
         if (currentUser.getUser().getId() == userId) {
             String response = userService.updateUserData(userId, name, surname, operatorCode, phoneNumber);
@@ -116,7 +123,7 @@ public class UserController {
     @PostMapping("/deactivate_account")
     public String postDeactivateAccount(RedirectAttributes redirectAttributes,
                                         @AuthenticationPrincipal CurrentUser currentUser,
-                                        @RequestParam("password") String password) {
+                                        @RequestParam String password) {
 
         if (passwordEncoder.matches(password, currentUser.getUser().getPassword())) {
             User user = currentUser.getUser();
@@ -136,8 +143,8 @@ public class UserController {
 
     @PostMapping("/change_password")
     public String postChangePassword(RedirectAttributes redirectAttributes,
-                                     @RequestParam("oldPassword") String oldPassword,
-                                     @RequestParam("newPassword") String newPassword,
+                                     @RequestParam String oldPassword,
+                                     @RequestParam String newPassword,
                                      @AuthenticationPrincipal CurrentUser currentUser) {
         if (passwordEncoder.matches(oldPassword, currentUser.getUser().getPassword())) {
             User user = currentUser.getUser();

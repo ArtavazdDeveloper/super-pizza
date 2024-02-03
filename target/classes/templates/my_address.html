@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
+    <title>Super Pizza</title>
+
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
+
+    <link href="/askbootstrap/preview/vegishop/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+</head>
+<body class="fixed-bottom-padding">
+
+<div class="border-bottom p-3 d-none mobile-nav">
+    <div class="title d-flex align-items-center">
+        <a href="home.html" class="text-decoration-none text-dark d-flex align-items-center">
+            <img class="osahan-logo mr-2" src="https://askbootstrap.com/preview/vegishop/img/logo.svg">
+            <h4 class="font-weight-bold text-success m-0">Grocery</h4>
+        </a>
+        <p class="ml-auto m-0">
+            <a href="/askbootstrap/preview/vegishop/listing.html"
+               class="text-decoration-none bg-white p-1 rounded shadow-sm d-flex align-items-center">
+                <i class="text-dark icofont-sale-discount"></i>
+                <span class="badge badge-danger p-1 ml-1 small">50%</span>
+            </a>
+        </p>
+        <a class="toggle ml-3" href="my_address.html#"><i class="icofont-navigation-menu"></i></a>
+    </div>
+    <a href="/askbootstrap/preview/vegishop/search.html" class="text-decoration-none">
+        <div class="input-group mt-3 rounded shadow-sm overflow-hidden bg-white">
+            <div class="input-group-prepend">
+                <button class="border-0 btn btn-outline-secondary text-success bg-white"><i class="icofont-search"></i>
+                </button>
+            </div>
+            <input type="text" class="shadow-none border-0 form-control pl-0" placeholder="Search for Products.."
+                   aria-label aria-describedby="basic-addon1">
+        </div>
+    </a>
+</div>
+<div class="theme-switch-wrapper">
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox"/>
+        <div class="slider round"></div>
+        <i class="icofont-moon"></i>
+    </label>
+    <em>Enable Dark Mode!</em>
+</div>
+
+<div th:insert="~{fragment/header::headerFragment}"></div>
+
+<nav aria-label="breadcrumb" class="breadcrumb mb-0">
+    <div class="container">
+        <ol class="d-flex align-items-center mb-0 p-0">
+            <li class="breadcrumb-item"><a href="my_address.html#" class="text-success">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">My address</li>
+        </ol>
+    </div>
+</nav>
+
+<section class="py-4 osahan-main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="osahan-account bg-white rounded shadow-sm overflow-hidden">
+                    <div class="p-4 profile text-center border-bottom">
+                        <img th:src="@{/get_user_image(imageName=${currentUser.getAvatar()})}"
+                             class="img-fluid rounded-pill">
+                        <h6 class="font-weight-bold m-0 mt-2"
+                            th:text="${currentUser.getName() + ' ' + currentUser.getSurname()}"></h6>
+                        <p class="small text-muted m-0">
+                        <h6 th:text="${currentUser.getContactData().getEmail()}"></h6>
+                        </p>
+                    </div>
+                    <div class="account-sections">
+                        <ul class="list-group">
+                            <a href="/user/account" class="text-decoration-none text-dark">
+                                <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                    <i class="icofont-user osahan-icofont bg-danger"></i>My Account
+                                    <span class="badge badge-success p-1 badge-pill ml-auto"><i
+                                            class="icofont-simple-right"></i></span>
+                                </li>
+                            </a>
+
+                            <a href="/address/user/address"
+                               class="text-decoration-none text-dark">
+                                <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                    <i class="icofont-address-book osahan-icofont bg-dark"></i>My Address
+                                    <span class="badge badge-success p-1 badge-pill ml-auto"><i
+                                            class="icofont-simple-right"></i></span>
+                                </li>
+                            </a>
+
+                            <a href="/logout" class="text-decoration-none text-dark">
+                                <li class="border-bottom bg-white d-flex  align-items-center p-3">
+                                    <i class="icofont-lock osahan-icofont bg-danger"></i> Logout
+                                </li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 p-4 bg-white rounded shadow-sm">
+                <div class="osahan-my_address">
+                    <h4 class="mb-4 profile-title">My Addresses</h4>
+                    <div th:each="address: ${addressList}"
+                         class="custom-control custom-radio px-0 mb-3 position-relative border-custom-radio">
+                        <input type="radio" id="customRadioInline1" name="customRadioInline1"
+                               class="custom-control-input" checked>
+                        <label class="custom-control-label w-100" for="customRadioInline1">
+                            <div>
+                                <div class="p-3 bg-white rounded shadow-sm w-100">
+                                    <div th:if="${address.getId() == addressList.get(0).getId()}"
+                                         class="d-flex align-items-center mb-2">
+                                        <p class="mb-0 h6">Home</p>
+                                        <p class="mb-0 badge badge-success ml-auto">Default</p>
+                                    </div>
+                                    <div th:if="${addressList.size() > 1 && address.getId() == addressList.get(1).getId()}"
+                                         class="d-flex align-items-center mb-2">
+                                        <p class="mb-0 h6">Work</p>
+                                    </div>
+                                    <div th:if="${addressList.size() > 2 && address.equals(addressList.get(2))}"
+                                         class="d-flex align-items-center mb-2">
+                                        <p class="mb-0 h6">Other</p>
+                                    </div>
+                                    <p class="small text-muted m-0"
+                                       th:text="${address.getRegion()} + ',  ' + ${address.getCity()}"></p>
+                                    <p class="small text-muted m-0"
+                                       th:text="${address.getStreet()} + ',  ' + ${address.getApartmentNumber()}"></p>
+
+                                    <p th:if="${address.getId() == addressList.get(0).getId()}"
+                                       class="pt-2 m-0 text-right"><span
+                                            class="small"><a href=""
+                                                             data-toggle="modal"
+                                                             data-target="#EditHome"
+                                                             class="text-decoration-none text-success"><i
+                                            class="icofont-edit"></i> Edit</a></span>
+                                        <span th:if="${addressList.size()>1}" class="small ml-3"><a href=""
+                                                                                                    data-toggle="modal"
+                                                                                                    data-target="#DeleteHome"
+                                                                                                    class="text-decoration-none text-danger"><i
+                                                class="icofont-trash"></i> Delete</a></span>
+                                    </p>
+                                    <p th:if="${addressList.size() > 1 && address.getId() == addressList.get(1).getId()}"
+                                       class="pt-2 m-0 text-right"><span
+                                            class="small"><a href=""
+                                                             data-toggle="modal"
+                                                             data-target="#EditWork"
+                                                             class="text-decoration-none text-success"><i
+                                            class="icofont-edit"></i> Edit</a></span>
+                                        <span class="small ml-3"><a href="" data-toggle="modal"
+                                                                    data-target="#DeleteWork"
+                                                                    class="text-decoration-none text-danger"><i
+                                                class="icofont-trash"></i> Delete</a></span>
+                                    </p>
+                                    <p th:if="${addressList.size() > 2 && address.getId() == addressList.get(2).getId()}"
+                                       class="pt-2 m-0 text-right"><span
+                                            class="small"><a href=""
+                                                             data-toggle="modal"
+                                                             data-target="#EditOther"
+                                                             class="text-decoration-none text-success"><i
+                                            class="icofont-edit"></i> Edit</a></span>
+                                        <span class="small ml-3"><a href="" data-toggle="modal"
+                                                                    data-target="#DeleteOther"
+                                                                    class="text-decoration-none text-danger"><i
+                                                class="icofont-trash"></i> Delete</a></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="DeleteHome" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabelHome"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" th:each="address: ${addressList.get(0)}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteModalLabelHome">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center d-flex align-items-center">
+                <div class="w-100 px-3">
+                    <i class="icofont-trash text-danger display-1 mb-5"></i>
+                    <h6>Are you sure you want to delete this?</h6>
+                    <p class="small text-muted m-0" th:text="${address.getRegion()} + ',  ' + ${address.getCity()}"></p>
+                    <p class="small text-muted m-0"
+                       th:text="${address.getStreet()} + ',  ' + ${address.getApartmentNumber()}"></p>
+
+                </div>
+            </div>
+            <div class="modal-footer p-0 border-0">
+                <div class="col-6 m-0 p-0">
+                    <button type="button" class="btn border-top btn-lg btn-block" data-dismiss="modal">Close</button>
+                </div>
+                <div class="col-6 m-0 p-0">
+                    <form method="get" th:action="@{'/address/delete/' + ${address.getId()}}">
+                        <button type="submit" class="btn btn-danger btn-lg btn-block">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:if="${addressList.size() > 1}" class="modal fade" id="DeleteWork" tabindex="-1" role="dialog"
+     aria-labelledby="DeleteModalLabelWork"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" th:each="address: ${addressList.get(1)}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteModalLabelWork">Delete!!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center d-flex align-items-center">
+                <div class="w-100 px-3">
+                    <i class="icofont-trash text-danger display-1 mb-5"></i>
+                    <h6>Are you sure you want to delete this?</h6>
+                    <p class="small text-muted m-0" th:text="${address.getRegion()} + ',  ' + ${address.getCity()}"></p>
+                    <p class="small text-muted m-0"
+                       th:text="${address.getStreet()} + ',  ' + ${address.getApartmentNumber()}"></p>
+
+                </div>
+            </div>
+            <div class="modal-footer p-0 border-0">
+                <div class="col-6 m-0 p-0">
+                    <button type="button" class="btn border-top btn-lg btn-block" data-dismiss="modal">Close</button>
+                </div>
+                <div class="col-6 m-0 p-0">
+                    <form method="get" th:action="@{'/address/delete/' + ${address.getId()}}">
+                        <button type="submit" class="btn btn-danger btn-lg btn-block">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:if="${addressList.size() > 2}" class="modal fade" id="DeleteOther" tabindex="-1" role="dialog"
+     aria-labelledby="DeleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" th:each="address: ${addressList.get(2)}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteModalLabel">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center d-flex align-items-center">
+                <div class="w-100 px-3">
+                    <i class="icofont-trash text-danger display-1 mb-5"></i>
+                    <h6>Are you sure you want to delete this?</h6>
+                    <p class="small text-muted m-0" th:text="${address.getRegion()} + ',  ' + ${address.getCity()}"></p>
+                    <p class="small text-muted m-0"
+                       th:text="${address.getStreet()} + ',  ' + ${address.getApartmentNumber()}"></p>
+
+                </div>
+            </div>
+            <div class="modal-footer p-0 border-0">
+                <div class="col-6 m-0 p-0">
+                    <button type="button" class="btn border-top btn-lg btn-block" data-dismiss="modal">Close</button>
+                </div>
+                <div class="col-6 m-0 p-0">
+                    <form method="get" th:action="@{'/address/delete/' + ${address.getId()}}">
+                        <button type="submit" class="btn btn-danger btn-lg btn-block">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EditHome" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{'/address/update/'+ ${addressList.get(0).getId()}}">
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Region</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control"
+                                       th:value="${addressList.get(0).getRegion()}" name="region">
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-control" th:value="${addressList.get(0).getCity()}"
+                                   name="city">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Street</label>
+                            <input type="text" class="form-control" th:value="${addressList.get(0).getStreet()}"
+                                   name="street">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Apartment number</label>
+                            <input type="text" class="form-control"
+                                   th:value="${addressList.get(0).getApartmentNumber()}" name="apartmentNumber">
+                        </div>
+                    </div>
+                    <div class="modal-footer p-0 border-0">
+                        <div class="col-6 m-0 p-0">
+                            <button type="button" class="btn border-top btn-lg btn-block" data-dismiss="modal">Close
+                            </button>
+                        </div>
+                        <div class="col-6 m-0 p-0">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:if="${addressList.size() > 1}" class="modal fade" id="EditWork" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabelWork"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelWork">Edit Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{'/address/update/'+ ${addressList.get(1).getId()}}">
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Region</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control"
+                                       th:value="${addressList.get(1).getRegion()}" name="region">
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-control" th:value="${addressList.get(1).getCity()}"
+                                   name="city">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Street</label>
+                            <input type="text" class="form-control" th:value="${addressList.get(1).getStreet()}"
+                                   name="street">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Apartment number</label>
+                            <input type="text" class="form-control"
+                                   th:value="${addressList.get(1).getApartmentNumber()}" name="apartmentNumber">
+                        </div>
+                    </div>
+                    <div class="modal-footer p-0 border-0">
+                        <div class="col-6 m-0 p-0">
+                            <button type="button" class="btn border-top btn-lg btn-block" data-dismiss="modal">Close
+                            </button>
+                        </div>
+                        <div class="col-6 m-0 p-0">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:if="${addressList.size() > 2}" class="modal fade" id="EditOther" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabelOther"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelOther">Edit Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{'/address/update/'+ ${addressList.get(2).getId()}}">
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Region</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control"
+                                       th:value="${addressList.get(2).getRegion()}" name="region">
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-control" th:value="${addressList.get(2).getCity()}"
+                                   name="city">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Street</label>
+                            <input type="text" class="form-control" th:value="${addressList.get(2).getStreet()}"
+                                   name="street">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Apartment number</label>
+                            <input type="text" class="form-control"
+                                   th:value="${addressList.get(2).getApartmentNumber()}" name="apartmentNumber">
+                        </div>
+                    </div>
+                    <div class="modal-footer p-0 border-0">
+                        <div class="col-6 m-0 p-0">
+                            <button type="button" class="btn border-top btn-lg btn-block" data-dismiss="modal">Close
+                            </button>
+                        </div>
+                        <div class="col-6 m-0 p-0">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav id="main-nav">
+    <ul class="second-nav">
+        <li><a href="home.html"><i class="icofont-smart-phone mr-2"></i> Home</a></li>
+        <li>
+            <a href="my_address.html#"><i class="icofont-login mr-2"></i> Authentication</a>
+            <ul>
+                <li><a class="dropdown-item" href="../../../../templates/signin.html">Sign In</a></li>
+                <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+                <li><a href="/askbootstrap/preview/vegishop/verification.html">Verification</a></li>
+            </ul>
+        </li>
+        <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/listing.html">Listing</a></li>
+        <li><a class="dropdown-item" href="/templates/product_details.html">Detail</a></li>
+        <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/picks_today.html">Trending</a></li>
+        <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/recommend.html">Recommended</a></li>
+        <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/fresh_vegan.html">Most Popular</a></li>
+        <li><a class="dropdown-item" href="./cart.html">Cart</a></li>
+        <li><a class="dropdown-item" href="./checkout.html">Checkout</a></li>
+        <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/successful.html">Successful</a></li>
+        <li>
+            <a href="my_address.html#"><i class="icofont-sub-listing mr-2"></i> My Order</a>
+            <ul>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/my_order.html">My order</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_complete.html">Status
+                    Complete</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_onprocess.html">Status on
+                    Process</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_canceled.html">Status
+                    Canceled</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/review.html">Review</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="my_address.html#"><i class="icofont-ui-user mr-2"></i> My Account</a>
+            <ul>
+                <li><a class="dropdown-item" href="userAccount.html">My account</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/promos.html">Promos</a></li>
+                <li><a class="dropdown-item" href="my_address.html">My address</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/terms_conditions.html">Terms &
+                    conditions</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/help_support.html">Help & support</a>
+                </li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/help_ticket.html">Help ticket</a></li>
+                <li><a class="dropdown-item" href="../../../../templates/signin.html">Logout</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="my_address.html#"><i class="icofont-page mr-2"></i> Pages</a>
+            <ul>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/verification.html">Verification</a>
+                </li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/promos.html">Promos</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/promo_details.html">Promo Details</a>
+                </li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/terms_conditions.html">Terms &
+                    Conditions</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/privacy.html">Privacy</a></li>
+                <li><a class="dropdown-item" href="terms&amp;conditions.html">Conditions</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/help_support.html">Help Support</a>
+                </li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/help_ticket.html">Help Ticket</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/refund_payment.html">Refund
+                    Payment</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/faq.html">FAQ</a></li>
+                <li><a class="dropdown-item" href="../../../../templates/signin.html">Sign In</a></li>
+                <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+                <li><a class="dropdown-item" href="/askbootstrap/preview/vegishop/search.html">Search</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="my_address.html#"><i class="icofont-link mr-2"></i> Navigation Link Example</a>
+            <ul>
+                <li>
+                    <a href="my_address.html#">Link Example 1</a>
+                    <ul>
+                        <li>
+                            <a href="my_address.html#">Link Example 1.1</a>
+                            <ul>
+                                <li><a href="my_address.html#">Link</a></li>
+                                <li><a href="my_address.html#">Link</a></li>
+                                <li><a href="my_address.html#">Link</a></li>
+                                <li><a href="my_address.html#">Link</a></li>
+                                <li><a href="my_address.html#">Link</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="my_address.html#">Link Example 1.2</a>
+                            <ul>
+                                <li><a href="my_address.html#">Link</a></li>
+                                <li><a href="my_address.html#">Link</a></li>
+                                <li><a href="my_address.html#">Link</a></li>
+                                <li><a href="my_address.html#">Link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="my_address.html#">Link Example 2</a></li>
+                <li><a href="my_address.html#">Link Example 3</a></li>
+                <li><a href="my_address.html#">Link Example 4</a></li>
+                <li data-nav-custom-content>
+                    <div class="custom-message">
+                        You can add any custom content to your navigation items. This text is just an example.
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="bottom-nav">
+        <li class="email">
+            <a class="text-success" href="home.html">
+                <p class="h5 m-0"><i class="icofont-home text-success"></i></p>
+                Home
+            </a>
+        </li>
+        <li class="github">
+            <a href="./cart.html">
+                <p class="h5 m-0"><i class="icofont-cart"></i></p>
+                CART
+            </a>
+        </li>
+        <li class="ko-fi">
+            <a href="/askbootstrap/preview/vegishop/help_ticket.html">
+                <p class="h5 m-0"><i class="icofont-headphone"></i></p>
+                Help
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<footer class="section-footer border-top bg-white">
+    <section class="footer-top py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-inline">
+                        <select class="custom-select mr-2">
+                            <option>USD</option>
+                            <option>EUR</option>
+                            <option>RUBL</option>
+                        </select>
+                        <select class="custom-select">
+                            <option>United States</option>
+                            <option>Russia</option>
+                            <option>Uzbekistan</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" placeholder="Email" class="form-control" name>
+                            <span class="input-group-append">
+<button type="submit" class="btn btn-success"> Subscribe</button>
+</span>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-md-4 text-md-right">
+                    <a href="my_address.html#" class="btn btn-icon btn-light"><i class="icofont-facebook"></i></a>
+                    <a href="my_address.html#" class="btn btn-icon btn-light"><i class="icofont-twitter"></i></a>
+                    <a href="my_address.html#" class="btn btn-icon btn-light"><i class="icofont-instagram"></i></a>
+                    <a href="my_address.html#" class="btn btn-icon btn-light"><i class="icofont-youtube"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="footer-main border-top pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md">
+                    <h6 class="title">Products</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a href="/askbootstrap/preview/vegishop/listing.html" class="text-dark">Listing</a></li>
+                        <li><a href="/templates/product_details.html" class="text-dark">Detail</a>
+                        </li>
+                        <li><a href="/askbootstrap/preview/vegishop/picks_today.html" class="text-dark">Trending</a>
+                        </li>
+                        <li><a href="/askbootstrap/preview/vegishop/recommend.html" class="text-dark">Recommended</a>
+                        </li>
+                        <li><a href="/askbootstrap/preview/vegishop/fresh_vegan.html" class="text-dark">Most Popular</a>
+                        </li>
+                    </ul>
+                </aside>
+                <aside class="col-md">
+                    <h6 class="title">Checkout Process</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a href="./cart.html" class="text-dark">Cart</a></li>
+                        <li><a href="./cart.html" class="text-dark">Order Address</a></li>
+                        <li><a href="./cart.html" class="text-dark">Delivery Time</a></li>
+                        <li><a href="./cart.html" class="text-dark">Order Payment</a></li>
+                        <li><a href="./checkout.html" class="text-dark">Checkout</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/successful.html" class="text-dark">Successful</a>
+                        </li>
+                    </ul>
+                </aside>
+                <aside class="col-md">
+                    <h6 class="title">My Order</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a href="/askbootstrap/preview/vegishop/my_order.html" class="text-dark">My order</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/status_complete.html" class="text-dark">Status
+                            Complete</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/status_onprocess.html" class="text-dark">Status on
+                            Process</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/status_canceled.html" class="text-dark">Status
+                            Canceled</a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/review.html" class="text-dark">Review</a></li>
+                    </ul>
+                </aside>
+                <aside class="col-md">
+                    <h6 class="title">My Account</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a class="text-dark" href="userAccount.html"> My account</a></li>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/promos.html"> Promos</a></li>
+                        <li><a class="text-dark" href="my_address.html"> My address</a></li>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/terms_conditions.html"> Terms
+                            &amp; conditions</a></li>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/help_support.html"> Help &amp;
+                            support</a></li>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/help_ticket.html"> Help ticket</a>
+                        </li>
+                        <li><a class="text-dark" href="../../../../templates/signin.html"> Logout</a></li>
+                    </ul>
+                </aside>
+                <aside class="col-md">
+                    <h6 class="title">Extra Pages</h6>
+                    <ul class="list-unstyled list-padding">
+                        <li><a href="/askbootstrap/preview/vegishop/promo_details.html" class="text-dark"> Promo
+                            Details </a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/terms_conditions.html" class="text-dark">
+                            Conditions </a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/help_support.html" class="text-dark"> Help
+                            Support </a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/refund_payment.html" class="text-dark"> Refund
+                            Payment </a></li>
+                        <li><a href="/askbootstrap/preview/vegishop/faq.html" class="text-dark"> FAQ </a></li>
+                        <li><a href="../../../../templates/signin.html" class="text-dark"> Sign In </a></li>
+                    </ul>
+                </aside>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="footer-bottom border-top py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="pr-2">© 2021 Vegishop</span>
+                    <span class="pr-2"><a href="/askbootstrap/preview/vegishop/privacy.html"
+                                          class="text-dark">Privacy</a></span>
+                    <span class="pr-2"><a href="terms&amp;conditions.html"
+                                          class="text-dark">Terms & Conditions</a></span>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <a "https://askbootstrap.com/preview/vegishop/href"><img
+                        src="/askbootstrap/preview/vegishop/img/appstore.png" height="30"></a>
+                    <a "https://askbootstrap.com/preview/vegishop/href"><img
+                        src="/askbootstrap/preview/vegishop/img/playmarket.png" height="30"></a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</footer>
+
+<script data-cfasync="false"
+        src="/askbootstrap/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
+        type="9f7d738da5b152cedbd055af-text/javascript"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        type="9f7d738da5b152cedbd055af-text/javascript"></script>
+
+<script type="9f7d738da5b152cedbd055af-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/slick/slick.min.js"></script>
+
+<script type="9f7d738da5b152cedbd055af-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/sidebar/hc-offcanvas-nav.js"></script>
+
+<script src="/askbootstrap/preview/vegishop/js/osahan.js" type="9f7d738da5b152cedbd055af-text/javascript"></script>
+<script src="/askbootstrap/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+        data-cf-settings="9f7d738da5b152cedbd055af-|49" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+        data-cf-beacon='{"rayId":"7d447c937d642920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
+    <title> Registration </title>
+
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
+
+    <link href="/askbootstrap/preview/vegishop/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+    <style>
+        .phone {
+            display: flex;
+            align-items: center;
+        }
+
+        .code {
+            display: flex;
+            align-items: center;
+        }
+
+        .operatorCode {
+            display: flex;
+            margin-left: 20px;
+            font-size: 18px;
+            margin-top: -9px;
+        }
+        select{
+            border-style: none;
+            height: 30px;
+            background: white;
+
+        }
+
+    </style>
+</head>
+<body class="fixed-bottom-padding">
+<div class="theme-switch-wrapper">
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox"/>
+        <div class="slider round"></div>
+        <i class="icofont-moon"></i>
+    </label>
+    <em>Enable Dark Mode!</em>
+</div>
+
+<div class="bg-color-head">
+    <div class="container menu-bar d-flex align-items-center">
+        <ul class="list-unstyled form-inline mb-0">
+            <li class="nav-item active">
+                <a class="nav-link text-white pl-0" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown"
+                   role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/askbootstrap/preview/vegishop/listing.html">Listing</a>
+                    <a class="dropdown-item"
+                       href="/templates/product_details.html">Detail</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/templates/picks_today.html">Trending</a>
+                    <a class="dropdown-item"
+                       href="/askbootstrap/preview/vegishop/recommend.html">Recommended</a>
+                    <a class="dropdown-item" href="/askbootstrap/preview/vegishop/fresh_vegan.html">Most
+                        Popular</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown"
+                   role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Extra Pages
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                    <a class="dropdown-item" href="/templates/manager/promos.html">Promos</a>
+                    <a class="dropdown-item" href="/templates/promo_details.html">Promo
+                        Details</a>
+                    <a class="dropdown-item" href="/askbootstrap/preview/vegishop/terms_conditions.html">Terms &
+                        Conditions</a>
+                    <a class="dropdown-item" href="/askbootstrap/preview/vegishop/privacy.html">Privacy</a>
+                    <a class="dropdown-item" href="terms&amp;conditions.html">Conditions</a>
+
+                    <a class="dropdown-item" href="/askbootstrap/preview/vegishop/faq.html">FAQ</a>
+                    <a class="dropdown-item" href="/templates/signin.html">Sign In</a>
+
+                </div>
+            </li>
+        </ul>
+        <div class="list-unstyled form-inline mb-0 ml-auto">
+            <a href="/templates/picks_today.html" class="text-white px-3 py-2">Trending</a>
+            <a href="/templates/manager/promos.html" class="text-white bg-offer px-3 py-2"><i
+                    class="icofont-sale-discount h6"></i>Promos</a>
+        </div>
+    </div>
+</div>
+
+
+<section class="osahan-main-body">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center vh-100">
+
+            <div class="col-lg-6 pl-lg-5">
+                <div class="osahan-signup shadow bg-white p-4 rounded">
+                    <div class="p-3">
+                        <h2 class="my-0">Let's get started</h2>
+                        <p class="small mb-4">Create account to see our top picks for you!</p>
+
+                        <h3 style="color: red" th:if="${msg}" th:text="${msg}"></h3>
+                        <form method="post" action="/user/register" enctype="multipart/form-data" th:object="${user}">
+                            <div class="form-group">
+                                <label for="exampleInputName1">Name</label>
+                                <input placeholder="Enter Name" type="text" class="form-control" id="exampleInputName1"
+                                       aria-describedby="emailHelp" th:field="*{name}" required>
+                                <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName2">Surname</label>
+                                <input placeholder="Enter Surname" type="text" class="form-control"
+                                       id="exampleInputName2"
+                                       aria-describedby="emailHelp" th:field="*{surname}" required>
+                                <div style="color: red" th:if="${#fields.hasErrors('surname')}"
+                                     th:errors="*{surname}"></div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input placeholder="Enter Password" type="password" class="form-control"
+                                       id="exampleInputPassword1" th:field="*{password}" min="6" required>
+                                <div style="color: red" th:if="${#fields.hasErrors('password')}"
+                                     th:errors="*{password}"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputDate3">Date of Birth</label>
+                                <input placeholder="Enter Age" type="date" class="form-control"
+                                       id="exampleInputDate3"
+                                       aria-describedby="emailHelp" th:field="*{dateOfBirth}" th:max="${maxDate}"
+                                       required>
+                            </div>
+
+                            <!--ContactData-->
+
+                            <div th:object="${contactData}">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input placeholder="Enter Email" type="email" class="form-control"
+                                           id="exampleInputEmail1" aria-describedby="emailHelp" th:field="*{email}"
+                                           required>
+                                    <div style="color: red" th:if="${#fields.hasErrors('email')}"
+                                         th:errors="*{email}"></div>
+
+                                </div>
+
+                                <label for="exampleInputNumber1">Phone Number</label>
+
+                                <div class="phone">
+                                    <div class="code">
+                                        <h6>+374</h6>
+                                    </div>
+                                    <div class="operatorCode" >
+                                        <select th:name="operatorCode">
+                                            <option th:each="operatorCode: ${operatorCodes}"
+                                                    th:text="${operatorCode.getOperatorCode()}" th:value="${operatorCode.getOperatorCode()}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input style="margin-left: 10px" placeholder="123456" type="tel" class="form-control"
+                                               id="exampleInputNumber1" aria-describedby="emailHelp"
+                                               th:field="*{phoneNumber}"
+                                               required/>
+                                        <div style="color: red" th:if="${#fields.hasErrors('phoneNumber')}"
+                                             th:errors="*{phoneNumber}"></div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                            <!--Address-->
+                            <div th:object="${address}">
+                                <div class="form-group">
+                                    <label for="region">Region</label>
+                                    <input placeholder="Enter region" type="text" class="form-control" id="region"
+                                           aria-describedby="emailHelp" th:field="*{region}">
+                                    <div style="color: red" th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input placeholder="Enter city" type="text" class="form-control" id="city"
+                                           aria-describedby="emailHelp" th:field="*{city}">
+                                    <div style="color: red" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="street">Street</label>
+                                    <input placeholder="Enter street" type="text" class="form-control" id="street"
+                                           aria-describedby="emailHelp" th:field="*{street}">
+                                    <div style="color: red" th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="apartmentNumber">Apartment Number</label>
+                                    <input placeholder="Apartment Number" type="text" class="form-control"
+                                           id="apartmentNumber"
+                                           aria-describedby="emailHelp" th:field="*{apartmentNumber}">
+                                    <div style="color: red" th:if="${#fields.hasErrors('apartmentNumber')}" th:errors="*{apartmentNumber}"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="attachAPhoto">Upload Image</label>
+
+                                <input type="file" name="profileImg" id="attachAPhoto" class="form-control">
+                            </div>
+
+                            <button class="btn btn-success rounded btn-lg btn-block">Create Account
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
+        type="9a113e20e2317c7aefe6c41a-text/javascript"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        type="9a113e20e2317c7aefe6c41a-text/javascript"></script>
+
+<script type="9a113e20e2317c7aefe6c41a-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/slick/slick.min.js"></script>
+
+<script type="9a113e20e2317c7aefe6c41a-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/sidebar/hc-offcanvas-nav.js"></script>
+
+<script src="/askbootstrap/preview/vegishop/js/osahan.js" type="9a113e20e2317c7aefe6c41a-text/javascript"></script>
+<script src="/askbootstrap/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+        data-cf-settings="9a113e20e2317c7aefe6c41a-|49" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+        data-cf-beacon='{"rayId":"7d447c5d18172920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

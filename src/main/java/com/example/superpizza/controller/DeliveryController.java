@@ -1,12 +1,10 @@
 package com.example.superpizza.controller;
 
-import com.example.superpizza.entity.CourierDelivery;
-import com.example.superpizza.entity.Order;
-import com.example.superpizza.entity.OrderStatus;
-import com.example.superpizza.security.CurrentUser;
-import com.example.superpizza.service.CourierDeliveryService;
-import com.example.superpizza.service.OrderService;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,10 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import com.example.superpizza.entity.CourierDelivery;
+import com.example.superpizza.entity.Order;
+import com.example.superpizza.entity.OrderStatus;
+import com.example.superpizza.security.CurrentUser;
+import com.example.superpizza.service.CourierDeliveryService;
+import com.example.superpizza.service.OrderService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,8 +32,8 @@ public class DeliveryController {
 
     @GetMapping("/delivery")
     public String getDeliveryPage(ModelMap modelMap,
-                                  @RequestParam("size") Optional<Integer> size,
-                                  @RequestParam("page") Optional<Integer> page) {
+                                  @RequestParam Optional<Integer> size,
+                                  @RequestParam Optional<Integer> page) {
         Page<Order> unDeliveredOrders = orderService.getUnDeliveredOrders(size, page);
 
         if (unDeliveredOrders.getTotalPages() > 0) {

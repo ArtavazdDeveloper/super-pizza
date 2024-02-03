@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
+    <title>My account</title>
+
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
+
+    <link href="/askbootstrap/preview/vegishop/vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
+
+    <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+    <style>
+        .phone {
+            display: flex;
+            align-items: center;
+        }
+
+        .code {
+            display: flex;
+            align-items: center;
+        }
+
+        .operatorCode {
+            display: flex;
+            margin-left: 20px;
+            font-size: 18px;
+            margin-top: -9px;
+        }
+    </style>
+</head>
+<body class="fixed-bottom-padding">
+
+<div th:insert="~{fragment/header::headerFragment}"></div>
+<nav aria-label="breadcrumb" class="breadcrumb mb-0">
+    <div class="container">
+        <ol class="d-flex align-items-center mb-0 p-0">
+            <li class="breadcrumb-item"><a href="my_address.html#" class="text-success">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">My account</li>
+        </ol>
+    </div>
+</nav>
+<div class="theme-switch-wrapper">
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox"/>
+        <div class="slider round"></div>
+        <i class="icofont-moon"></i>
+    </label>
+    <em>Enable Dark Mode!</em>
+</div>
+
+<section class="py-4 osahan-main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="osahan-account bg-white rounded shadow-sm overflow-hidden">
+                    <div class="p-4 profile text-center border-bottom">
+                        <img th:src="@{/get_user_image(imageName=${currentUser.getAvatar()})}"
+                             class="img-fluid rounded-pill">
+                        <h6 class="font-weight-bold m-0 mt-2"
+                            th:text="${currentUser.getName() + ' ' + currentUser.getSurname()}"></h6>
+                        <p class="small text-muted m-0">
+                        <h6>ADMIN</h6>
+                        </p>
+                    </div>
+                    <div class="account-sections">
+                        <ul class="list-group">
+                            <a href="/admin/user_setting" class="text-decoration-none text-dark">
+                                <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                    <i class="icofont-user osahan-icofont bg-danger"></i>USERS SETTING
+                                    <span class="badge badge-success p-1 badge-pill ml-auto"><i
+                                            class="icofont-simple-right"></i></span>
+                                </li>
+                            </a>
+
+                            <a href="/admin/product"
+                               class="text-decoration-none text-dark">
+                                <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                    <i class="icofont-sale-discount osahan-icofont bg-success"></i>PRODUCT PAGE
+                                    <span class="badge badge-success p-1 badge-pill ml-auto"><i
+                                            class="icofont-simple-right"></i></span>
+                                </li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 p-4 bg-white rounded shadow-sm">
+                <h4 class="mb-4 profile-title" style=margin-left:280px>RESOURCES</h4>
+                <div id="edit_profile">
+                    <div class="p-0">
+
+                            <div class="form-group">
+                                    <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                        <i class="icofont-user osahan-icofont bg-danger"></i> <h6>USERS COUNT - </h6><h6 th:text="${userListSize}"></h6>
+                                    </li>
+                            </div>
+                            <div class="form-group">
+                                    <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                        <i class="icofont-sale-discount osahan-icofont bg-success"></i> <h6>PRODUCT COUNT - </h6> <h6 th:text="${productListSize}"></h6>
+                                    </li>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:insert="~{fragment/footer::footerFragment}"></div>
+
+
+<div th:insert="~{fragment/loginPanel::loginRegisterPanel}"></div>
+
+<script data-cfasync="false"
+        src="/askbootstrap/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
+        type="e92688fe48558a4fdf540e8c-text/javascript"></script>
+<script src="/askbootstrap/preview/vegishop/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        type="e92688fe48558a4fdf540e8c-text/javascript"></script>
+
+<script type="e92688fe48558a4fdf540e8c-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/slick/slick.min.js"></script>
+
+<script type="e92688fe48558a4fdf540e8c-text/javascript"
+        src="/askbootstrap/preview/vegishop/vendor/sidebar/hc-offcanvas-nav.js"></script>
+
+<script src="/askbootstrap/preview/vegishop/js/osahan.js" type="e92688fe48558a4fdf540e8c-text/javascript"></script>
+<script src="/askbootstrap/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+        data-cf-settings="e92688fe48558a4fdf540e8c-|49" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+        data-cf-beacon='{"rayId":"7d447c905d272920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

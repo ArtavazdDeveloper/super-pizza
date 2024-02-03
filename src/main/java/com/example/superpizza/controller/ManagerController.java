@@ -1,18 +1,26 @@
 package com.example.superpizza.controller;
 
-import com.example.superpizza.entity.productEntity.Product;
-import com.example.superpizza.entity.productEntity.ProductType;
-import com.example.superpizza.service.ProductsService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.superpizza.entity.productEntity.Product;
+import com.example.superpizza.entity.productEntity.ProductType;
+import com.example.superpizza.service.ProductsService;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Controller
@@ -38,15 +46,15 @@ public class ManagerController {
     }
 
     @GetMapping("/delete_product")
-    public String deleteProduct(@RequestParam("id") int id) {
+    public String deleteProduct(@RequestParam int id) {
         productsService.DeleteById(id);
         return "redirect:/manager";
     }
 
     @GetMapping("/take_product_by_type/type={type}")
     public String takeByProductType(ModelMap modelMap,
-                                    @RequestParam("size") Optional<Integer> size,
-                                    @RequestParam("page") Optional<Integer> page,
+                                    @RequestParam Optional<Integer> size,
+                                    @RequestParam Optional<Integer> page,
                                     @PathVariable("type") String productType) {
         Page<Product> pageable = productsService.createPageable(size, page, ProductType.valueOf(productType));
         ProductType [] productTypes = ProductType.values();

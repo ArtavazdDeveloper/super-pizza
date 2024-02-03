@@ -1,9 +1,10 @@
 package com.example.superpizza.controller;
 
-import com.example.superpizza.entity.productEntity.Product;
-import com.example.superpizza.entity.productEntity.ProductType;
-import com.example.superpizza.service.ProductsService;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import com.example.superpizza.entity.productEntity.Product;
+import com.example.superpizza.entity.productEntity.ProductType;
+import com.example.superpizza.service.ProductsService;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Controller
@@ -35,9 +37,9 @@ public class ProductController {
     }
 
     @GetMapping("/get_product_by_type/type={type}")
-    public String getProductDetailPage(@PathVariable("type") String type, ModelMap modelMap,
-                                       @RequestParam("size") Optional<Integer> size,
-                                       @RequestParam("page") Optional<Integer> page) {
+    public String getProductDetailPage(@PathVariable String type, ModelMap modelMap,
+                                       @RequestParam Optional<Integer> size,
+                                       @RequestParam Optional<Integer> page) {
 
         ProductType[] values = ProductType.values();
         modelMap.addAttribute("productTypes", values);
